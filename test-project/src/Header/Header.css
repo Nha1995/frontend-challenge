@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  height: 64px;
+  width: 100%;
+  background-color: #2196f3;
+  vertical-align: middle;  
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24);
+  margin-bottom: 52px;
+}
+
+.header__button {
+  display: inline-block;
+  border: none;
+  color: white;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.header button:first-child {
+  width: 120px;
+  margin-left: 4.54%;
+}
+
+.header button:last-child {
+  width: 173px;
+}
+
+.header__button:hover {
+  background-color: #1e88e5;
+}
+
+.header__link {
+  text-decoration: none;
+  color: white;
+}
