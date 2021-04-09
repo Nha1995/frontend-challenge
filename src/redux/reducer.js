@@ -11,9 +11,7 @@ function reducer(state = initialState, action) {
     }
     case "DELETE CAT": {
       const newFavCats = state.favoriteCats.filter((favCat) => {
-        if (favCat.id !== action.payload.cat.id) {
-          return favCat;
-        }
+        return favCat.id !== action.payload.cat.id;
       });
       return {
         favoriteCats: newFavCats,
