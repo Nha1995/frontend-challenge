@@ -20,7 +20,6 @@ class Header extends React.Component {
       <div className="header">
         <Link
           to="/"
-          onClick={() => this.opacityHandler("favorite cats")}
           onClick={() => this.opacityHandler("cats")}
           className={
             this.state.catsPage
