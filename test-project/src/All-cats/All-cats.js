@@ -1,19 +1,22 @@
 import React from "react";
 import "./All-cats.css";
+import store from "../redux/store";
+import { connect } from "react-redux";
+import CatImage from "../Cat-image/Cat-image";
+
+let pageNumber = 0;
 
 class Cats extends React.Component {
   state = {
     cats: [],
-    page: 8,
-    favoriteCats: [],
   };
 
-  componentDidMount() {
+  getCatsFunction = () => {
     const key = "api_key=23e83fc7-a78b-4306-b286-3496593e575d";
     try {
       const getCats = async () => {
         const response = await fetch(
-          `https://api.thecatapi.com/v1/images/search?limit=15&page=${this.state.page}&order=Desc&${key}`
+          `https://api.thecatapi.com/v1/images/search?limit=15&page=${pageNumber}&order=Desc&${key}`
         );
         const results = await response.json();
         this.setState({ cats: [...this.state.cats, ...results] });
@@ -22,45 +25,60 @@ class Cats extends React.Component {
     } catch (err) {
       console.log(err);
     }
-  }
-
-  isFavorite = (catId) => {
-    const id = this.state.favoriteCats.find((favIds) => favIds === catId);
-    if (id === undefined) {
-      this.setState({
-        favoriteCats: [...this.state.favoriteCats, catId],
-      });
-    } else {
-      const newFavCats = this.state.favoriteCats.filter((favCat) => {
-        if (favCat !== id) {
-          return favCat;
-        }
-      });
-      console.log(newFavCats);
-      this.setState({ favoriteCats: newFavCats });
-    }
-
-    console.log(this.state);
   };
 
-  checkFavoriteHandler = (catId) => {
-    const id = this.state.favoriteCats.find((favIds) => favIds === catId);
-    if (id !== undefined) {
+  componentDidMount() {
+    this.getCatsFunction();
+  }
+
+  isFavorite = (cat) => {
+    const isCat = this.props.favoriteCats.find(
+      (favCat) => favCat.id === cat.id
+    );
+    if (isCat === undefined) {
+      store.dispatch({
+        type: "ADD CAT IN FAVORITES",
+        payload: {
+          cat: cat,
+        },
+      });
+    } else {
+      store.dispatch({
+        type: "DELETE CAT",
+        payload: {
+          cat: cat,
+        },
+      });
+    }
+  };
+
+  checkFavoriteHandler = (cat) => {
+    const isCat = this.props.favoriteCats.find(
+      (favCat) => favCat.id === cat.id
+    );
+    if (isCat !== undefined) {
       return true;
     } else {
       return false;
     }
   };
 
+  loadMoreCatsHandler = () => {
+    pageNumber++;
+    this.getCatsFunction();
+  };
+
   render() {
-    console.log(this.state);
+    console.log(this.props);
     return (
       <div className="cats">
         {this.state.cats.map((cat) => {
           return (
             <div className="cat-block">
-              <img src={cat.url} className="cats__img" alt={cat.id} />
-              {this.checkFavoriteHandler(cat.id) && (
+                
+              <CatImage url = {cat.url} />
+
+              {this.checkFavoriteHandler(cat) && (
                 <div className="cats__favorite">
                   <svg
                     width="40"
@@ -76,11 +94,8 @@ class Cats extends React.Component {
                   </svg>
                 </div>
               )}
-              <div
-                className="cats__heart"
-                onClick={() => this.isFavorite(cat.id)}
-              >
-                {this.checkFavoriteHandler(cat.id) ? (
+              <div className="cats__heart" onClick={() => this.isFavorite(cat)}>
+                {this.checkFavoriteHandler(cat) ? (
                   <svg
                     width="40"
                     height="37"
@@ -111,9 +126,23 @@ class Cats extends React.Component {
             </div>
           );
         })}
+        <div className="cats__load-more-cats-link">
+          <p onClick={this.loadMoreCatsHandler}>
+            ... загружаем еще котиков ...
+          </p>
+        </div>
       </div>
     );
   }
 }
 
-export default Cats;
+const mapStateToProps = (state) => {
+  return {
+    favoriteCats: state.favoriteCats,
+  };
+};
+
+const functionFromConnect = connect(mapStateToProps);
+const updateDataSets = functionFromConnect(Cats);
+
+export default updateDataSets;

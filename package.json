@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Nha1995/frontend-challenge#readme",
   "dependencies": {
+    "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0"
   }
 }

@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin: 0 auto;
 }
 
 .cat-block {
@@ -14,16 +15,13 @@
   margin-bottom: 48px;
 }
 
-.cat-block:hover .cats__img {
+.cat-block:hover .img {
   width: 107%;
   height: 107%;
   box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.24), 0px 9px 18px rgba(0, 0, 0, 0.18);
 }
 
-.cats__img {
-  width: 100%;
-  height: 100%;
-}
+
 
 .cats__heart {
   display: none;
@@ -47,4 +45,16 @@
  .cat-block:hover .cats__favorite {
   bottom: 0;
   left: 80%;
+}
+
+.cats__load-more-cats-link {
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight:400;
+}
+
+.cats__load-more-cats-link p {
+    margin: 0 0 31px 0;
+    cursor: pointer;
 }

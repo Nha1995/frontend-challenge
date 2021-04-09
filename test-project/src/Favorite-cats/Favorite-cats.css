@@ -1,0 +1,9 @@
+.favorites {
+    justify-content:center;
+    margin: 0 auto;
+    align-items:center;
+}
+
+.favorite-cat-block {
+    margin-right: 23px;
+}
