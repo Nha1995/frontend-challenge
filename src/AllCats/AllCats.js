@@ -13,7 +13,7 @@ class Cats extends React.Component {
   };
 
   infiniteScroll = () => {
-    // End of the document reached?
+    // Достигнут конец документа
     if (
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
@@ -21,7 +21,8 @@ class Cats extends React.Component {
       this.loadMoreCatsHandler();
     }
   };
-
+  
+  //Получает 15 фотографий из API для текущего pageNumber и добавляет их в state.
   getCatsFunction = () => {
     try {
       const getCats = async () => {
@@ -37,16 +38,20 @@ class Cats extends React.Component {
     }
   };
 
+  //Обнуляем номер страницы при первичной загрузке, далее подписываемся на событие scroll с функцией infiniteScroll
+  //  и вызываем функцию getCatsFunction для получения из сервера нужных нам объектов.
   componentDidMount() {
     pageNumber = 0;
     window.addEventListener("scroll", this.infiniteScroll);
     this.getCatsFunction();
   }
 
+  //отписываемся от события scroll
   componentWillUnmount() {
     window.removeEventListener("scroll", this.infiniteScroll);
   }
 
+  //Реализована функция добавления и удаления котиков в раздел "Любимые котики" через redux.
   isFavorite = (cat) => {
     const isCat = this.props.favoriteCats.find(
       (favCat) => favCat.id === cat.id
@@ -68,6 +73,7 @@ class Cats extends React.Component {
     }
   };
 
+  //Функция проверяет есть ли данная фотография в списке "Любимых котиков" и в зависимости от результата возвращает true или false
   checkFavoriteHandler = (cat) => {
     const isCat = this.props.favoriteCats.find(
       (favCat) => favCat.id === cat.id
@@ -79,6 +85,7 @@ class Cats extends React.Component {
     }
   };
 
+  //Загружаем больше объектов с API , увеличивая pageNumber на одну еденицу и вызывая функцию getCatsFunction.
   loadMoreCatsHandler = () => {
     pageNumber++;
     this.getCatsFunction();

@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import store from "../redux/store";
 
 class Favorites extends React.Component {
+
+  //Удаление котика из списка любимые котики.
   removeHandler = (cat) => {
     store.dispatch({
       type: "DELETE CAT",
