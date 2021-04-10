@@ -57,4 +57,5 @@
 .cats__load-more-cats-link p {
     margin: 0 0 31px 0;
     cursor: pointer;
+    text-align: center;
 }
