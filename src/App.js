@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
 import Header from "./Header/Header";
-import Cats from "./All-cats/All-cats";
+import Cats from "./AllCats/AllCats";
 import { Switch, Route } from "react-router-dom";
-import Favorites from "./Favorite-cats/Favorite-cats";
+import Favorites from "./FavoriteCats/FavoriteCats";
 
 class App extends React.Component {
   render() {

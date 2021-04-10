@@ -1,6 +1,6 @@
 import React from "react";
-import "./Favorite-cats.css";
-import Image from "../Cat-image/Cat-image";
+import "./FavoriteCats.css";
+import Image from "../CatImage/CatImage";
 import { connect } from "react-redux";
 import store from "../redux/store";
 

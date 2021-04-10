@@ -1,5 +1,5 @@
 import React from "react";
-import "./Cat-image.css";
+import "./CatImage.css";
 
 class Image extends React.Component {
   render() {

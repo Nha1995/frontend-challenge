@@ -1,18 +1,28 @@
 import React from "react";
-import "./All-cats.css";
+import "./AllCats.css";
 import store from "../redux/store";
 import { connect } from "react-redux";
-import CatImage from "../Cat-image/Cat-image";
+import CatImage from "../CatImage/CatImage";
 
 let pageNumber = 0;
+const key = "api_key=23e83fc7-a78b-4306-b286-3496593e575d";
 
 class Cats extends React.Component {
   state = {
     cats: [],
   };
 
+  infiniteScroll = () => {
+    // End of the document reached?
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      this.loadMoreCatsHandler();
+    }
+  };
+
   getCatsFunction = () => {
-    const key = "api_key=23e83fc7-a78b-4306-b286-3496593e575d";
     try {
       const getCats = async () => {
         const response = await fetch(
@@ -28,7 +38,13 @@ class Cats extends React.Component {
   };
 
   componentDidMount() {
+    pageNumber = 0;
+    window.addEventListener("scroll", this.infiniteScroll);
     this.getCatsFunction();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.infiniteScroll);
   }
 
   isFavorite = (cat) => {
@@ -69,14 +85,12 @@ class Cats extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="cats">
         {this.state.cats.map((cat) => {
           return (
             <div className="cat-block">
-                
-              <CatImage url = {cat.url} />
+              <CatImage url={cat.url} />
 
               {this.checkFavoriteHandler(cat) && (
                 <div className="cats__favorite">
@@ -127,7 +141,7 @@ class Cats extends React.Component {
           );
         })}
         <div className="cats__load-more-cats-link">
-          <p onClick={this.loadMoreCatsHandler}>
+          <p>
             ... загружаем еще котиков ...
           </p>
         </div>
