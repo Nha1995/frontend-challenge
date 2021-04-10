@@ -146,7 +146,9 @@ class Cats extends React.Component {
           })}
         </div>
         <div className="cats__load-more-cats-link">
-          <p>... загружаем еще котиков ...</p>
+          <p onClick={() => this.loadMoreCatsHandler()}>
+            ... загружаем еще котиков ...
+          </p>
         </div>
       </>
     );
