@@ -15,7 +15,8 @@ class Cats extends React.Component {
   infiniteScroll = () => {
     // Достигнут конец документа
     if (
-      window.innerHeight + document.documentElement.scrollTop ===
+      window.innerHeight + (document.documentElement.scrollTop || document.body.scrollTop)
+      ===
       document.documentElement.offsetHeight
     ) {
       this.loadMoreCatsHandler();
@@ -27,7 +28,7 @@ class Cats extends React.Component {
     try {
       const getCats = async () => {
         const response = await fetch(
-          `https://api.thecatapi.com/v1/images/search?limit=15&page=${pageNumber}&order=Desc&${key}`
+          `https://api.thecatapi.com/v1/images/search?limit=15&page=${pageNumber}&order=Asc&${key}`
         );
         const results = await response.json();
         this.setState({ cats: [...this.state.cats, ...results] });
@@ -97,7 +98,7 @@ class Cats extends React.Component {
         <div className="cats">
           {this.state.cats.map((cat) => {
             return (
-              <div className="cat-block">
+              <div className="cat-block" key = {cat.id}>
                 <CatImage url={cat.url} />
 
                 {this.checkFavoriteHandler(cat) && (
